@@ -113,9 +113,9 @@ p_xlln.fields = {f_ss_family, f___ss_pad1, f___ss_align, f___ss_pad2, f_instance
                  f_join_request_signature, f_password_sha256, f_title_id}
 
 function p_xlln.dissector(buffer, pinfo, tree)
-    while buffer:len() ~= 0 do
-        pinfo.cols.protocol = p_xlln.name
+    pinfo.cols.protocol = p_xlln.name
 
+    while buffer:len() ~= 0 do
         local subtree = tree:add(p_xlln, buffer(), "XLLN Protocol Data")
 
         local packet_type = buffer(0, 1):le_uint()
@@ -408,4 +408,4 @@ function get_packet_type_name(packet_type)
 end
 
 local udp_port = DissectorTable.get("udp.port")
-udp_port:add(2000, p_xlln)
+udp_port:add(3000, p_xlln)
